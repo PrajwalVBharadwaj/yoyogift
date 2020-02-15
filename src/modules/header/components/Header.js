@@ -6,7 +6,7 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { connect } from "react-redux";
-import GoogleLogin from "react-google-login";
+import LoginComponent from "../../common/components/LoginComponent";
 import { login, logout, createUser } from "../state/actions";
 import { bindActionCreators } from "redux";
 import history from "../../common/components/history";
@@ -31,12 +31,10 @@ class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showErrorSnack: false
+      showErrorSnack: false,
+      isOpen: false
     };
   }
-  LoginSuccess = response => {
-    this.props.login(response.profileObj);
-  };
   render() {
     const { showErrorSnack } = this.state;
     const { classes } = this.props;
@@ -82,26 +80,34 @@ class Header extends Component {
                 MY PROFILE
               </Button>
             ) : null}
-            <Button
-              className={Styles.headerButton}
-              color="inherit"
-              onClick={() => {}}
-            >
-              {this.props.isLoggedIn ? (
-                "LOGOUT"
-              ) : (
-                <GoogleLogin
-                  buttonText="Login"
-                  clientId="871799886160-uekhldkefqmed3o383jo5bvln5e41e6a.apps.googleusercontent.com"
-                  onSuccess={this.LoginSuccess}
-                />
-              )}
-            </Button>
+
+            {this.props.isLoggedIn ? (
+              <Button
+                className={Styles.headerButton}
+                color="inherit"
+                onClick={this.logOut}
+              >
+                LOGOUT
+              </Button>
+            ) : (
+              <Button
+                className={Styles.headerButton}
+                color="inherit"
+                onClick={this.login}
+              >
+                LOGIN
+              </Button>
+            )}
           </Toolbar>
         </AppBar>
+        <LoginComponent login={this.props.login} isOpen={this.state.isOpen} />
       </div>
     );
   }
+
+  login = () => {
+    this.setState({ isOpen: true });
+  };
 
   goTolanding = () => {
     history.push("/");
@@ -140,6 +146,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return bindActionCreators({ login, logout, createUser }, dispatch);
 };
+
+export { Header };
 
 export default connect(
   mapStateToProps,

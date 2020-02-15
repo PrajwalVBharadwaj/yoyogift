@@ -9,7 +9,7 @@ import {
 import { fetchCard, updateCardCount } from "../state/actions";
 import GiftShow from "../components/GiftShow";
 import Snackbar from "../../common/components/Snackbar";
-import * as emailjs from 'emailjs-com';
+import * as emailjs from "emailjs-com";
 class GiftShowContainer extends Component {
   state = {
     showErrorSnackBar: false,
@@ -39,7 +39,7 @@ class GiftShowContainer extends Component {
     }
   }
   componentDidCatch(error, info) {
-    console.log(error)
+    console.log(error);
   }
   validateSend = async sendTo => {
     if (
@@ -66,21 +66,20 @@ class GiftShowContainer extends Component {
       const newBalance = currentBalance - cardPrice;
       this.props.updateUserBalance(this.props.login.id, newBalance).then(() => {
         this.props.updateTransact(UpdatedTransactObj).then(() => {
-          this.props.updateCardCount(
-            this.props.gift.id,
-            this.props.gift.cardCount - 1
-          ).then(() => {
-            this.sendMail(this.state.email, this.props.login.email)
-            console.log(this.props.login)
-            this.setState({
-              showSuccessSnackBar: true
-            });
-            setTimeout(() => {
+          this.props
+            .updateCardCount(this.props.gift.id, this.props.gift.cardCount - 1)
+            .then(() => {
+              this.sendMail(this.state.email, this.props.login.email);
+              console.log(this.props.login);
               this.setState({
-                showSuccessSnackBar: false
+                showSuccessSnackBar: true
               });
-            }, 6000);
-          })
+              setTimeout(() => {
+                this.setState({
+                  showSuccessSnackBar: false
+                });
+              }, 6000);
+            });
         });
       });
       //send email
@@ -95,24 +94,28 @@ class GiftShowContainer extends Component {
       }, 6000);
     }
   };
-  
+
   sendMail = (email, name) => {
     let payload = {
-        to_email: email,
-        from_name: name
-    }
+      to_email: email,
+      from_name: name
+    };
     // Your email service name if you just have one, you can use this one.
     var service_id = "sendgrid";
     // Template you will use
     var template_id = "template1";
-    // Send message using your client       
-    emailjs.send(service_id, template_id, payload, "user_PpATvNmFAn9KTbfZPyCC6")
-        .then(function(response) {
-            console.log('SUCCESS!', response.status, response.text);
-        }, function(error) {
-            console.log('FAILED...', error);
-    });
-};
+    // Send message using your client
+    emailjs
+      .send(service_id, template_id, payload, "user_PpATvNmFAn9KTbfZPyCC6")
+      .then(
+        function(response) {
+          console.log("SUCCESS!", response.status, response.text);
+        },
+        function(error) {
+          console.log("FAILED...", error);
+        }
+      );
+  };
   render() {
     const { showErrorSnackBar, showSuccessSnackBar, email } = this.state;
     const balance_points = Number(this.state.balance_points);
@@ -122,16 +125,18 @@ class GiftShowContainer extends Component {
         <CircularProgress style={{ marginLeft: "50%", marginTop: "10%" }} />
       );
     }
-    console.log(typeof(cardPoints - balance_points))
-    let points = isNaN(cardPoints - balance_points) ?
-     'You need more points to gift this card' : 
-     'You need '+(cardPoints - balance_points)+' more points to gift this card'
+    console.log(typeof (cardPoints - balance_points));
+    let points = isNaN(cardPoints - balance_points)
+      ? "You need more points to gift this card"
+      : "You need " +
+        (cardPoints - balance_points) +
+        " more points to gift this card";
     return (
       <div>
         {showErrorSnackBar ? (
           <Snackbar
             message={
-              !this.props.isLoggedIn 
+              !this.props.isLoggedIn
                 ? `Error! You need to log in first`
                 : points
             }
@@ -160,11 +165,16 @@ const mapStateToProps = (state, ownProps) => {
     gift: state.gifts.giftCard,
     user: state.users.UserDetails,
     login: state.login.detailsObject,
-    isLoggedIn: state.login.loginStatus,
+    isLoggedIn: state.login.loginStatus
   };
 };
 
-export default connect(
-  mapStateToProps,
-  { fetchCard, userDetails, updateUserBalance, updateTransact, updateCardCount }
-)(GiftShowContainer);
+export { GiftShowContainer };
+
+export default connect(mapStateToProps, {
+  fetchCard,
+  userDetails,
+  updateUserBalance,
+  updateTransact,
+  updateCardCount
+})(GiftShowContainer);
