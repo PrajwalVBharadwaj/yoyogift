@@ -1,10 +1,10 @@
 import React from "react";
 import { shallow } from "../../../Enzyme";
-import { DatePickers } from "./DatePicker";
+import LoginComponent from "./LoginComponent";
 
-describe("Testing Date picker", () => {
+describe("Testing Login component", () => {
   it("Snapshot testing", () => {
-    const wrapper = shallow(<DatePickers classes={{}} />);
+    const wrapper = shallow(<LoginComponent />);
     expect(wrapper).toMatchSnapshot();
   });
 });

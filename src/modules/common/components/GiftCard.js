@@ -112,7 +112,9 @@ class GiftCard extends React.Component {
 }
 
 GiftCard.propTypes = {
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  giftCard: PropTypes.object.isRequired,
+  userEmail: PropTypes.string
 };
 
 export { GiftCard };

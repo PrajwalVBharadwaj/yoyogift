@@ -14,6 +14,8 @@ const cardDetails = {
   cardImage: "https://pngimg.com/uploads/amazon/amazon_PNG21.png",
   cardVendor: "amazon",
   cardShortDesc: "10% OFF",
+  receiverEmail: "test.mail.com",
+  userEmail: "test.mail.com",
   cardLongDesc:
     "Amazon Gift Cards are the Perfect Gift, Every Time. Use the eBay Gift Card to shop from millions of items in Electronics, Toys, Motors, Fashion, Home & Garden, Art, Collectibles, Sporting Goods and everything in-between. eBay Gift Cards never expire and have no fees. Use it to shop now or wait for the deal of a lifetime.",
   cardComments: [
@@ -54,7 +56,8 @@ const userDetails = {
   balance_points: 500,
   wishlist: [],
   cards_gifted: [],
-  cards_received: []
+  cards_received: [],
+  socialProfileLink: "testing"
 };
 export { shallow, mount, render, userDetails, cardDetails };
 export default Enzyme;

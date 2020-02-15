@@ -11,13 +11,16 @@ import GiftShow from "../components/GiftShow";
 import Snackbar from "../../common/components/Snackbar";
 import * as emailjs from "emailjs-com";
 class GiftShowContainer extends Component {
-  state = {
-    showErrorSnackBar: false,
-    showSuccessSnackBar: false,
-    balance_points: null,
-    cardPoints: null,
-    email: ""
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      showErrorSnackBar: false,
+      showSuccessSnackBar: false,
+      balance_points: null,
+      cardPoints: null,
+      email: ""
+    };
+  }
   componentDidMount() {
     // this.sendMail()
     const id = this.props.match.params.id;

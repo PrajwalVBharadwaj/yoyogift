@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import InputTypeComponent from "../../common/components/inputTypeComponent";
+import InputTypeComponent from "../../common/components/InputTypeComponent";
 import { withRouter } from "react-router-dom";
 import { Button } from "@material-ui/core";
 import { connect } from "react-redux";

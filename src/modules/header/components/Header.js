@@ -35,6 +35,9 @@ class Header extends Component {
       isOpen: false
     };
   }
+  CloseDialog = () => {
+    this.setState({ isOpen: false });
+  };
   render() {
     const { showErrorSnack } = this.state;
     const { classes } = this.props;
@@ -100,7 +103,11 @@ class Header extends Component {
             )}
           </Toolbar>
         </AppBar>
-        <LoginComponent login={this.props.login} isOpen={this.state.isOpen} />
+        <LoginComponent
+          login={this.props.login}
+          isOpen={this.state.isOpen}
+          closeDialog={this.CloseDialog}
+        />
       </div>
     );
   }

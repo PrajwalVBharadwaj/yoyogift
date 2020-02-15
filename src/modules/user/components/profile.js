@@ -8,98 +8,13 @@ class Profile extends Component {
   render() {
     let {
       email,
-      firstName,
-      lastName,
+      first_name,
+      last_name,
       socialProfileLink,
       picture,
       balance_points
     } = this.props.detailsObject;
     return (
-      // <React.Fragment>
-      //   <br />
-      //   <br />
-      //   <div className="row">
-      //     <div className="col-md-12">
-      //       {" "}
-      //       <label className="">
-      //         <h1>Your Profile</h1>{" "}
-      //       </label>
-      //     </div>
-      //   </div>
-      //   <hr />
-      //   <div className="row">
-      //     <div className="col-md-12">
-      //       {" "}
-      //       <label className="">
-      //         {" "}
-      //         <img
-      //           className="img-fluid"
-      //           alt="profile"
-      //           src={picture}
-      //           height="150"
-      //           width="150"
-      //         />
-      //       </label>
-      //     </div>
-      //   </div>
-      //   <hr />
-      //   <div className="row">
-      //     <div className="col-md-4">
-      //       {" "}
-      //       <label className="">Name</label>
-      //     </div>
-      //     <div className="col-md-8">
-      //       {" "}
-      //       <label className="">
-      //         {" "}
-      //         {firstName} {lastName}
-      //       </label>
-      //     </div>
-      //   </div>
-      //   <hr />
-      //   <div className="row">
-      //     <div className="col-md-4">
-      //       {" "}
-      //       <label className="">Email </label>
-      //     </div>
-      //     <div className="col-md-8">
-      //       {" "}
-      //       <label className="">{email} </label>
-      //     </div>
-      //   </div>
-      //   <hr />
-      //   <div className="row">
-      //     <div className="col-md-4">
-      //       {" "}
-      //       <label className="">Gender </label>
-      //     </div>
-      //     <div className="col-md-8">
-      //       {" "}
-      //       <label className="">{gender} </label>
-      //     </div>
-      //   </div>
-      //   <hr />
-      //   <div className="row">
-      //     <div className="col-md-4">
-      //       {" "}
-      //       <label className="">Social Link </label>
-      //     </div>
-      //     <div className="col-md-8">
-      //       {" "}
-      //       <label className="">
-      //         {" "}
-      //         <a
-      //           target="_blank"
-      //           rel="noopener noreferrer"
-      //           href={socialProfileLink}
-      //         >
-      //           {socialProfileLink}
-      //         </a>
-      //       </label>
-      //     </div>
-      //   </div>
-      //   <hr />
-      // </React.Fragment>
       <>
         <div className={Styles.profileHeader}>
           <img className={Styles.profileImg} alt="profile" src={picture} />
@@ -116,7 +31,7 @@ class Profile extends Component {
             </Grid>
             <Grid item xs={8}>
               <Paper className={Styles.profileValues}>
-                {firstName} {lastName}
+                {first_name} {last_name}
               </Paper>
               <Paper className={Styles.profileValues}>{email}</Paper>
               {socialProfileLink ? (

@@ -1,7 +1,26 @@
 .container {
   width: 40vw;
   height: 100%;
+  text-align: center;
+  align-content: center;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 5%;
 }
 .inputFields {
-  display: block;
+  width: 25vw;
+  box-sizing: border-box;
+  padding: 1%;
+  margin: 5%;
+  flex: 1;
+}
+.login {
+  display: flex;
+  flex-direction: column;
+  margin-top: 10%;
+  margin-bottom: 10%;
+  align-items: center;
+}
+.closeButton:hover {
+  cursor: pointer;
 }
