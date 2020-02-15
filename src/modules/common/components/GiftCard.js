@@ -73,10 +73,10 @@ class GiftCard extends React.Component {
             adminEmail.includes(userEmail) ? (
               <>
                 <Link to={`/AddUpdateForm/${giftCard.id}`}>
-                <IconButton>
-                  <EditIcon />
-                </IconButton>
-              </Link>
+                  <IconButton>
+                    <EditIcon />
+                  </IconButton>
+                </Link>
               </>
             ) : null
           }
@@ -114,5 +114,7 @@ class GiftCard extends React.Component {
 GiftCard.propTypes = {
   classes: PropTypes.object.isRequired
 };
+
+export { GiftCard };
 
 export default withStyles(styles)(GiftCard);

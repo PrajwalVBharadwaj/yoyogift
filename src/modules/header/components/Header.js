@@ -6,17 +6,18 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { connect } from "react-redux";
+import GoogleLogin from "react-google-login";
 import { login, logout, createUser } from "../state/actions";
 import { bindActionCreators } from "redux";
 import history from "../../common/components/history";
 import MySnackBar from "../../common/components/Snackbar";
-import Styles from '../../../assets/css/Header.module.css';
+import Styles from "../../../assets/css/Header.module.css";
 
 const styles = {
   root: {
     flexGrow: 1,
     flexShrink: 1,
-    width: '100%' 
+    width: "100%"
   },
   grow: {
     flexGrow: 1
@@ -27,23 +28,23 @@ const styles = {
 };
 
 class Header extends Component {
-  constructor(props){
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
       showErrorSnack: false
-    }
+    };
   }
+  LoginSuccess = response => {
+    this.props.login(response.profileObj);
+  };
   render() {
-    const { showErrorSnack } = this.state
+    const { showErrorSnack } = this.state;
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        {
-          showErrorSnack ? 
-          <MySnackBar message='Network Error! Please try again' color='red' />
-          :
-          null
-        }
+        {showErrorSnack ? (
+          <MySnackBar message="Network Error! Please try again" color="red" />
+        ) : null}
         <AppBar position="static">
           <Toolbar className={classes.toolBar}>
             <Typography variant="h6" color="inherit" className={classes.grow}>
@@ -55,26 +56,46 @@ class Header extends Component {
             </Typography>
             {/* {this.props.isLoggedIn ? <Button color="inherit" onClick={this.addUpdateForm}>ADD UPDATE FORM</Button> : null} */}
             {this.props.isLoggedIn ? (
-              <Button className={Styles.headerButton} color="inherit" onClick={this.giftsReceived}>
+              <Button
+                className={Styles.headerButton}
+                color="inherit"
+                onClick={this.giftsReceived}
+              >
                 GIFTS RECEIVED
               </Button>
             ) : null}
             {this.props.isLoggedIn ? (
-              <Button className={Styles.headerButton} color="inherit" onClick={this.giftsSend}>
+              <Button
+                className={Styles.headerButton}
+                color="inherit"
+                onClick={this.giftsSend}
+              >
                 GIFTS SENT
               </Button>
             ) : null}
             {this.props.isLoggedIn ? (
-              <Button className={Styles.headerButton} color="inherit" onClick={this.myProfile}>
+              <Button
+                className={Styles.headerButton}
+                color="inherit"
+                onClick={this.myProfile}
+              >
                 MY PROFILE
               </Button>
             ) : null}
-            <Button className={Styles.headerButton}
+            <Button
+              className={Styles.headerButton}
               color="inherit"
-              onClick={() => {
-              }}
+              onClick={() => {}}
             >
-              {this.props.isLoggedIn ? "LOGOUT" : "LOGIN"}
+              {this.props.isLoggedIn ? (
+                "LOGOUT"
+              ) : (
+                <GoogleLogin
+                  buttonText="Login"
+                  clientId="871799886160-uekhldkefqmed3o383jo5bvln5e41e6a.apps.googleusercontent.com"
+                  onSuccess={this.LoginSuccess}
+                />
+              )}
             </Button>
           </Toolbar>
         </AppBar>
@@ -103,7 +124,6 @@ class Header extends Component {
     window.sessionStorage.removeItem("user");
     window.sessionStorage.removeItem("usertype");
   };
-
 }
 
 Header.propTypes = {
