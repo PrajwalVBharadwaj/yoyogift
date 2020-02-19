@@ -12,7 +12,7 @@ import Grid from "@material-ui/core/Grid";
 import GiftCard from "../../common/components/GiftCard";
 import { TablePaginationActionsWrapped } from "../../common/components/TablePaginationActionsWrapped";
 
-const styles = theme => ({
+const styles = () => ({
   root: {
     width: "90%",
     margin: "2%",
@@ -55,9 +55,16 @@ class GiftsList extends React.Component {
               <Grid container spacing={16}>
                 {giftCardsFiltered
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map(giftCard => {
+                  .map((giftCard, index) => {
                     return (
-                      <Grid item xs={12} sm={6} md={3} lg={3}>
+                      <Grid
+                        item
+                        xs={12}
+                        sm={6}
+                        md={3}
+                        lg={3}
+                        key={Math.floor(Math.random() * 100 * index)}
+                      >
                         <GiftCard
                           giftCard={giftCard}
                           userEmail={userDetails.email}

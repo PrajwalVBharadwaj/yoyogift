@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axiosWrapper from "../../../apis/axiosCreate";
 import { Table, Column } from "react-virtualized";
 import "react-virtualized/styles.css";
 
-export default props => {
+const ListUsers = () => {
   const [users, updateUsers] = useState(null);
   const [, update] = useState(null);
   window.addEventListener("resize", update);
-  useEffect(() => {
+  React.useEffect(() => {
     if (users === null)
       axiosWrapper.get("/users").then(response => {
         updateUsers(response.data);
@@ -35,3 +35,5 @@ export default props => {
     </Table>
   );
 };
+
+export default ListUsers;

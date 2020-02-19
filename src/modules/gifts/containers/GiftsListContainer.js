@@ -39,7 +39,7 @@ class GiftsListContainer extends React.Component {
   componentDidMount() {
     this.props.fetchCards();
   }
-  componentDidCatch(error, info) {
+  componentDidCatch(error) {
     console.log(error);
   }
 
@@ -153,8 +153,15 @@ class GiftsListContainer extends React.Component {
               input={<OutlinedInput labelWidth={0} name="kpiValue" />}
             >
               <option value="All">All</option>
-              {uniqueCardRetailerArray.map(option => {
-                return <option value={option}>{option}</option>;
+              {uniqueCardRetailerArray.map((option, index) => {
+                return (
+                  <option
+                    value={option}
+                    key={Math.floor(Math.random() * 100 * index)}
+                  >
+                    {option}
+                  </option>
+                );
               })}
             </Select>
           </Grid>
@@ -173,8 +180,15 @@ class GiftsListContainer extends React.Component {
               input={<OutlinedInput labelWidth={0} name="sortByValue" />}
             >
               <option value="None">None</option>
-              {sortCategoryArray.map(option => {
-                return <option value={option}>{option}</option>;
+              {sortCategoryArray.map((option, index) => {
+                return (
+                  <option
+                    value={option}
+                    key={Math.floor(Math.random() * 100 * index)}
+                  >
+                    {option}
+                  </option>
+                );
               })}
             </Select>
             {this.state.sortOrder ? (

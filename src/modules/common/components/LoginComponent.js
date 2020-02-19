@@ -49,7 +49,7 @@ class LoginComponent extends React.Component {
         cards_received: [],
         picture: response.profileObj.imageUrl
       };
-      axiosWrapper.post("/users", { ...profile }).then(res => {
+      axiosWrapper.post("/users", { ...profile }).then(() => {
         this.props.login(profile);
         window.sessionStorage.setItem("user", JSON.stringify(profile));
       });

@@ -67,7 +67,7 @@ class Landing extends Component {
             {/* Added map functon for repetitive code */}
             {this.cardsData.map(card => {
               return (
-                <div className={Styles.vendorContainer}>
+                <div className={Styles.vendorContainer} key={76}>
                   <img
                     className={Styles.vendorImage}
                     src={card.imgSrc}

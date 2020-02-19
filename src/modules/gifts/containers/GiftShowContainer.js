@@ -41,7 +41,7 @@ class GiftShowContainer extends Component {
         });
     }
   }
-  componentDidCatch(error, info) {
+  componentDidCatch(error) {
     console.log(error);
   }
   validateSend = async sendTo => {
@@ -170,7 +170,7 @@ class GiftShowContainer extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = state => {
   return {
     gift: state.gifts.giftCard,
     user: state.users.UserDetails,

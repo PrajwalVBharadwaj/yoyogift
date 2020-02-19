@@ -5,8 +5,18 @@ import LoginComponent from "./LoginComponent";
 import axiosWrapper from "../../../apis/axiosCreate";
 
 describe("Testing Login component", () => {
-  it("Snapshot testing", () => {
-    const wrapper = shallow(<LoginComponent />);
+  it("Snapshot testing", async () => {
+    const wrapper = shallow(
+      <LoginComponent login={() => {}} closeDialog={() => {}} />
+    );
+    axiosWrapper.post = jest.fn().mockImplementation(() => {
+      return Promise.resolve({ data: [userDetails] });
+    });
+
+    axiosWrapper.get = jest.fn().mockImplementation(() => {
+      return Promise.resolve({ data: [userDetails] });
+    });
+    wrapper.instance().LoginSuccess({ profileObj: userDetails });
     expect(wrapper).toMatchSnapshot();
   });
   it("Native Login, invalid email", async () => {
@@ -98,5 +108,21 @@ describe("Testing Login component", () => {
     wrapper = wrapper.update();
     console.log(wrapper.state());
     expect(wrapper.state().password).toBe("TestPass");
+  });
+
+  it("New user login", () => {
+    const wrapper = shallow(
+      <LoginComponent login={() => {}} closeDialog={() => {}} />
+    );
+    axiosWrapper.post = jest.fn().mockImplementation(() => {
+      return Promise.resolve({ data: [userDetails] });
+    });
+
+    axiosWrapper.get = jest.fn().mockImplementation(() => {
+      return Promise.resolve({ data: [] });
+    });
+    wrapper.instance().LoginSuccess({ profileObj: userDetails });
+    wrapper.update();
+    expect(wrapper.state().isLoading).toBe(false);
   });
 });

@@ -13,6 +13,7 @@ describe("Testing GiftReceivedContainer", () => {
       />
     );
     wrapper.instance().handleRedeemCard(cardDetails);
+    wrapper.instance().componentDidCatch();
     expect(wrapper.find({ dataTest: "progress" }).length).toBe(1);
   });
 

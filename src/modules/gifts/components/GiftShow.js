@@ -5,7 +5,7 @@ import { DateFormatter } from "./../../common/components/DateFormatter";
 import StarRatingComponent from "react-star-rating-component";
 import SendGiftCardDialog from "../../common/components/DraggableDialog";
 // import { loglevel } from "../../../config/loggerConfig";
-import logger from "../../../config/logglyConfig";
+// import logger from "../../../config/logglyConfig";
 
 const GiftShow = props => {
   const { data } = props;
@@ -52,9 +52,12 @@ const GiftShow = props => {
             <div>
               <p className={Styles.label}> RATING & REVIEWS:</p>
               {data.cardComments ? (
-                data.cardComments.map(comment => {
+                data.cardComments.map((comment, index) => {
                   return (
-                    <div className={Styles.commentsSection}>
+                    <div
+                      className={Styles.commentsSection}
+                      key={Math.floor(Math.random() * 100 * index)}
+                    >
                       <p className={Styles.commentorName}>
                         {" "}
                         {comment.first_name} {comment.last_name}

@@ -14,6 +14,7 @@ describe("Testing GiftsShowContainer", () => {
         fetchCard={() => {}}
       />
     );
+    wrapper.instance().componentDidCatch();
     expect(wrapper).toMatchSnapshot();
   });
 

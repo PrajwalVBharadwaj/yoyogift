@@ -361,7 +361,7 @@ class AddUpdateForm extends Component {
       if (Object.keys(this.updatePayload).length !== 0) {
         this.props
           .adminUpdateCard(this.currentGiftCard.id, this.updatePayload)
-          .then(response => {
+          .then(() => {
             this.setState({
               showUpdateSnackBar: true
             });
@@ -394,7 +394,7 @@ class AddUpdateForm extends Component {
           endAdornment={false}
           inputHelperText={this.state.cardNameHelperText}
           handleInputChange={this.handleCardNameChange.bind(this)}
-          ref="myInput"
+          // ref="myInput"
         />
         <InputTypeComponent
           styles={{
@@ -410,7 +410,7 @@ class AddUpdateForm extends Component {
           endAdornment={false}
           inputHelperText={this.state.cardPointsHelperText}
           handleInputChange={this.handleCardPointsChange.bind(this)}
-          ref="myInput"
+          // ref="myInput"
         />
         <InputTypeComponent
           styles={{
@@ -426,7 +426,7 @@ class AddUpdateForm extends Component {
           endAdornment={false}
           inputHelperText={this.state.cardCategoryHelperText}
           handleInputChange={this.handleCardCategoryChange.bind(this)}
-          ref="myInput"
+          // ref="myInput"
         />
         <InputTypeComponent
           styles={{
@@ -442,7 +442,7 @@ class AddUpdateForm extends Component {
           endAdornment={false}
           inputHelperText={this.state.cardRetailerHelperText}
           handleInputChange={this.handleCardRetailerChange.bind(this)}
-          ref="myInput"
+          // ref="myInput"
         />
         <InputTypeComponent
           styles={{
@@ -458,7 +458,7 @@ class AddUpdateForm extends Component {
           endAdornment={false}
           inputHelperText={this.state.cardExpiryDateHelperText}
           handleInputChange={this.handleCardExpiryDateChange.bind(this)}
-          ref="myInput"
+          // ref="myInput"
         />
         <InputTypeComponent
           styles={{
@@ -474,7 +474,7 @@ class AddUpdateForm extends Component {
           endAdornment={false}
           inputHelperText={this.state.cardCountHelperText}
           handleInputChange={this.handleCardCountChange.bind(this)}
-          ref="myInput"
+          // ref="myInput"
         />
         <InputTypeComponent
           styles={{
@@ -490,7 +490,7 @@ class AddUpdateForm extends Component {
           endAdornment={false}
           inputHelperText={this.state.cardImageHelperText}
           handleInputChange={this.handleCardImageChange.bind(this)}
-          ref="myInput"
+          // ref="myInput"
         />
         <InputTypeComponent
           styles={{
@@ -506,7 +506,7 @@ class AddUpdateForm extends Component {
           endAdornment={false}
           inputHelperText={this.state.cardVendorHelperText}
           handleInputChange={this.handleCardVendorChange.bind(this)}
-          ref="myInput"
+          // ref="myInput"
         />
         <InputTypeComponent
           styles={{
@@ -522,7 +522,7 @@ class AddUpdateForm extends Component {
           endAdornment={false}
           inputHelperText={this.state.cardShortDescHelperText}
           handleInputChange={this.handleCardShortDescChange.bind(this)}
-          ref="myInput"
+          // ref="myInput"
         />
         <InputTypeComponent
           styles={{
@@ -538,7 +538,7 @@ class AddUpdateForm extends Component {
           endAdornment={false}
           inputHelperText={this.state.cardLongDescHelperText}
           handleInputChange={this.handleCardLongDescChange.bind(this)}
-          ref="myInput"
+          // ref="myInput"
         />
         <div style={{ marginTop: "10px", marginBottom: "100px" }}>
           <Button

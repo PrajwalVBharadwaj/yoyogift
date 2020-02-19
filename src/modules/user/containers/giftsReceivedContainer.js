@@ -9,7 +9,7 @@ class GiftsReceivedContainer extends Component {
   componentDidMount() {
     if (this.props.user) this.props.fetchReceivedCards(this.props.user.email);
   }
-  componentDidCatch(error, info) {
+  componentDidCatch(error) {
     console.log(error);
   }
   handleRedeemCard = row => {

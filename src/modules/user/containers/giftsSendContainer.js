@@ -9,7 +9,7 @@ class GiftsSendContainer extends Component {
   componentDidMount() {
     if (this.props.user) this.props.fetchSentCards(this.props.user.email);
   }
-  componentDidCatch(error, info) {
+  componentDidCatch(error) {
     console.log(error);
   }
   render() {
