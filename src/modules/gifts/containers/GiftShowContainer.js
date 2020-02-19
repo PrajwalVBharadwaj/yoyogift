@@ -9,22 +9,25 @@ import {
 import { fetchCard, updateCardCount } from "../state/actions";
 import GiftShow from "../components/GiftShow";
 import Snackbar from "../../common/components/Snackbar";
-import * as emailjs from 'emailjs-com';
+import * as emailjs from "emailjs-com";
 class GiftShowContainer extends Component {
-  state = {
-    showErrorSnackBar: false,
-    showSuccessSnackBar: false,
-    balance_points: null,
-    cardPoints: null,
-    email: ""
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      showErrorSnackBar: false,
+      showSuccessSnackBar: false,
+      balance_points: null,
+      cardPoints: null,
+      email: ""
+    };
+  }
   componentDidMount() {
     // this.sendMail()
     const id = this.props.match.params.id;
     this.props.fetchCard(id);
     if (this.props.login) {
       this.props
-        .userDetails(this.props.login.id)
+        .userDetails(this.props.login.email)
         .then(() => {
           this.setState({
             balance_points: this.props.user.balance_points,
@@ -38,8 +41,8 @@ class GiftShowContainer extends Component {
         });
     }
   }
-  componentDidCatch(error, info) {
-    console.log(error)
+  componentDidCatch(error) {
+    console.log(error);
   }
   validateSend = async sendTo => {
     if (
@@ -64,25 +67,29 @@ class GiftShowContainer extends Component {
       const currentBalance = this.props.user.balance_points;
       const cardPrice = this.props.gift.cardPoints;
       const newBalance = currentBalance - cardPrice;
-      this.props.updateUserBalance(this.props.login.id, newBalance).then(() => {
-        this.props.updateTransact(UpdatedTransactObj).then(() => {
-          this.props.updateCardCount(
-            this.props.gift.id,
-            this.props.gift.cardCount - 1
-          ).then(() => {
-            this.sendMail(this.state.email, this.props.login.email)
-            console.log(this.props.login)
-            this.setState({
-              showSuccessSnackBar: true
-            });
-            setTimeout(() => {
-              this.setState({
-                showSuccessSnackBar: false
+      this.props
+        .updateUserBalance(this.props.login.email, newBalance)
+        .then(() => {
+          this.props.updateTransact(UpdatedTransactObj).then(() => {
+            this.props
+              .updateCardCount(
+                this.props.gift.id,
+                this.props.gift.cardCount - 1
+              )
+              .then(() => {
+                this.sendMail(this.state.email, this.props.login.email);
+
+                this.setState({
+                  showSuccessSnackBar: true
+                });
+                setTimeout(() => {
+                  this.setState({
+                    showSuccessSnackBar: false
+                  });
+                }, 6000);
               });
-            }, 6000);
-          })
+          });
         });
-      });
       //send email
     } else {
       this.setState({
@@ -95,43 +102,51 @@ class GiftShowContainer extends Component {
       }, 6000);
     }
   };
-  
+
   sendMail = (email, name) => {
     let payload = {
-        to_email: email,
-        from_name: name
-    }
+      to_email: email,
+      from_name: name
+    };
     // Your email service name if you just have one, you can use this one.
     var service_id = "sendgrid";
     // Template you will use
     var template_id = "template1";
-    // Send message using your client       
-    emailjs.send(service_id, template_id, payload, "user_PpATvNmFAn9KTbfZPyCC6")
-        .then(function(response) {
-            console.log('SUCCESS!', response.status, response.text);
-        }, function(error) {
-            console.log('FAILED...', error);
-    });
-};
+    // Send message using your client
+    emailjs
+      .send(service_id, template_id, payload, "user_PpATvNmFAn9KTbfZPyCC6")
+      .then(
+        function(response) {
+          console.log("SUCCESS!", response.status, response.text);
+        },
+        function(error) {
+          console.log("FAILED...", error);
+        }
+      );
+  };
   render() {
     const { showErrorSnackBar, showSuccessSnackBar, email } = this.state;
     const balance_points = Number(this.state.balance_points);
     const cardPoints = Number(this.state.cardPoints);
     if (Object.keys(this.props.gift).length === 0) {
       return (
-        <CircularProgress style={{ marginLeft: "50%", marginTop: "10%" }} />
+        <CircularProgress
+          dataTest="progress"
+          style={{ marginLeft: "50%", marginTop: "10%" }}
+        />
       );
     }
-    console.log(typeof(cardPoints - balance_points))
-    let points = isNaN(cardPoints - balance_points) ?
-     'You need more points to gift this card' : 
-     'You need '+(cardPoints - balance_points)+' more points to gift this card'
+    let points = isNaN(cardPoints - balance_points)
+      ? "You need more points to gift this card"
+      : "You need " +
+        (cardPoints - balance_points) +
+        " more points to gift this card";
     return (
       <div>
         {showErrorSnackBar ? (
           <Snackbar
             message={
-              !this.props.isLoggedIn 
+              !this.props.isLoggedIn
                 ? `Error! You need to log in first`
                 : points
             }
@@ -155,16 +170,21 @@ class GiftShowContainer extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => {
+const mapStateToProps = state => {
   return {
     gift: state.gifts.giftCard,
     user: state.users.UserDetails,
     login: state.login.detailsObject,
-    isLoggedIn: state.login.loginStatus,
+    isLoggedIn: state.login.loginStatus
   };
 };
 
-export default connect(
-  mapStateToProps,
-  { fetchCard, userDetails, updateUserBalance, updateTransact, updateCardCount }
-)(GiftShowContainer);
+export { GiftShowContainer };
+
+export default connect(mapStateToProps, {
+  fetchCard,
+  userDetails,
+  updateUserBalance,
+  updateTransact,
+  updateCardCount
+})(GiftShowContainer);

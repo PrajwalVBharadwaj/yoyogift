@@ -14,6 +14,6 @@ export const logout = () => {
   };
 };
 
-export const createUser = userDetails => async dispatch => {
+export const createUser = userDetails => async () => {
   await axiosWrapper.post(`/users`, userDetails);
 };

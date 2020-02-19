@@ -6,17 +6,19 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import { connect } from "react-redux";
+import LoginComponent from "../../common/components/LoginComponent";
 import { login, logout, createUser } from "../state/actions";
 import { bindActionCreators } from "redux";
 import history from "../../common/components/history";
 import MySnackBar from "../../common/components/Snackbar";
-import Styles from '../../../assets/css/Header.module.css';
+import Styles from "../../../assets/css/Header.module.css";
+import { adminEmail } from "../../../config/constants";
 
 const styles = {
   root: {
     flexGrow: 1,
     flexShrink: 1,
-    width: '100%' 
+    width: "100%"
   },
   grow: {
     flexGrow: 1
@@ -27,23 +29,24 @@ const styles = {
 };
 
 class Header extends Component {
-  constructor(props){
-    super(props)
+  constructor(props) {
+    super(props);
     this.state = {
-      showErrorSnack: false
-    }
+      showErrorSnack: false,
+      isOpen: false
+    };
   }
+  CloseDialog = () => {
+    this.setState({ isOpen: false });
+  };
   render() {
-    const { showErrorSnack } = this.state
+    const { showErrorSnack } = this.state;
     const { classes } = this.props;
     return (
       <div className={classes.root}>
-        {
-          showErrorSnack ? 
-          <MySnackBar message='Network Error! Please try again' color='red' />
-          :
-          null
-        }
+        {showErrorSnack ? (
+          <MySnackBar message="Network Error! Please try again" color="red" />
+        ) : null}
         <AppBar position="static">
           <Toolbar className={classes.toolBar}>
             <Typography variant="h6" color="inherit" className={classes.grow}>
@@ -53,34 +56,77 @@ class Header extends Component {
                 </span>
               </Button>
             </Typography>
-            {/* {this.props.isLoggedIn ? <Button color="inherit" onClick={this.addUpdateForm}>ADD UPDATE FORM</Button> : null} */}
             {this.props.isLoggedIn ? (
-              <Button className={Styles.headerButton} color="inherit" onClick={this.giftsReceived}>
+              this.props.userDetails.email === adminEmail ? (
+                <Button
+                  color="inherit"
+                  onClick={() => {
+                    history.push("/userList");
+                  }}
+                >
+                  Show users
+                </Button>
+              ) : null
+            ) : null}
+            {this.props.isLoggedIn ? (
+              <Button
+                className={Styles.headerButton}
+                color="inherit"
+                onClick={this.giftsReceived}
+              >
                 GIFTS RECEIVED
               </Button>
             ) : null}
             {this.props.isLoggedIn ? (
-              <Button className={Styles.headerButton} color="inherit" onClick={this.giftsSend}>
+              <Button
+                className={Styles.headerButton}
+                color="inherit"
+                onClick={this.giftsSend}
+              >
                 GIFTS SENT
               </Button>
             ) : null}
             {this.props.isLoggedIn ? (
-              <Button className={Styles.headerButton} color="inherit" onClick={this.myProfile}>
+              <Button
+                className={Styles.headerButton}
+                color="inherit"
+                onClick={this.myProfile}
+              >
                 MY PROFILE
               </Button>
             ) : null}
-            <Button className={Styles.headerButton}
-              color="inherit"
-              onClick={() => {
-              }}
-            >
-              {this.props.isLoggedIn ? "LOGOUT" : "LOGIN"}
-            </Button>
+
+            {this.props.isLoggedIn ? (
+              <Button
+                className={Styles.headerButton}
+                color="inherit"
+                onClick={this.logOut}
+              >
+                LOGOUT
+              </Button>
+            ) : (
+              <Button
+                className={Styles.headerButton}
+                color="inherit"
+                onClick={this.login}
+              >
+                LOGIN
+              </Button>
+            )}
           </Toolbar>
         </AppBar>
+        <LoginComponent
+          login={this.props.login}
+          isOpen={this.state.isOpen}
+          closeDialog={this.CloseDialog}
+        />
       </div>
     );
   }
+
+  login = () => {
+    this.setState({ isOpen: true });
+  };
 
   goTolanding = () => {
     history.push("/");
@@ -103,7 +149,6 @@ class Header extends Component {
     window.sessionStorage.removeItem("user");
     window.sessionStorage.removeItem("usertype");
   };
-
 }
 
 Header.propTypes = {
@@ -120,6 +165,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return bindActionCreators({ login, logout, createUser }, dispatch);
 };
+
+export { Header };
 
 export default connect(
   mapStateToProps,

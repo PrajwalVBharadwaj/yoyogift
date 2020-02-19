@@ -19,6 +19,7 @@ const InputTypeComponent = props => {
       >
         <InputLabel htmlFor={props.inputId}>{props.inputName}</InputLabel>
         <Input
+          dataTest="input"
           type={props.inputType}
           id={props.inputId}
           value={props.inputValue}

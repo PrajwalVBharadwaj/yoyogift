@@ -19,7 +19,7 @@ function Footer(props) {
   const { classes } = props;
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} data-test="FooterContainer">
       <AppBar position="static" color="default">
         <Toolbar>
           <p style={{ float: "right" }}>
@@ -34,5 +34,7 @@ function Footer(props) {
 Footer.propTypes = {
   classes: PropTypes.object.isRequired
 };
+
+export { Footer };
 
 export default withStyles(styles)(Footer);

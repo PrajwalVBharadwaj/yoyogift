@@ -4,7 +4,7 @@ import SnackbarContent from "@material-ui/core/SnackbarContent";
 
 class MySnackBar extends Component {
   render() {
-    const { message , color} = this.props
+    const { message, color } = this.props;
     return (
       <div>
         <Snackbar
@@ -16,12 +16,12 @@ class MySnackBar extends Component {
         >
           <SnackbarContent
             message={message}
-            style={{backgroundColor: color}}
+            style={{ backgroundColor: color }}
           />
         </Snackbar>
       </div>
     );
   }
 }
-
+export { MySnackBar };
 export default MySnackBar;
