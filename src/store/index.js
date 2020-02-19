@@ -1,7 +1,7 @@
-import { combineReducers } from 'redux';
-import giftsReducer from '../modules/gifts/state/reducers/giftsReducer';
-import loginReducer from '../modules/header/state/reducers/loginReducer';
-import usersReducer from '../modules/user/state/reducers/usersReducer';
+import { combineReducers } from "redux";
+import giftsReducer from "../modules/state/giftReducers/giftsReducer";
+import loginReducer from "../modules/state/headerReducers/loginReducer";
+import usersReducer from "../modules/state/userReducers/usersReducer";
 
 const rootReducer = combineReducers({
   gifts: giftsReducer,

@@ -1,10 +1,10 @@
 import React from "react";
 import Loadable from "react-loadable";
 import { Router, Route, Switch, Redirect } from "react-router-dom";
-import Header from "./header/components/Header";
-import Footer from "./common/components/Footer";
-import Landing from "./landing/Landing";
-import history from "./common/components/history";
+import Header from "./atoms/Header";
+import Footer from "./atoms/Footer";
+import Landing from "./pages/Landing";
+import history from "./atoms/history";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import { LocalizeProvider } from "react-localize-redux";
 
@@ -32,47 +32,42 @@ function Loading({ error }) {
 }
 
 const GiftsListContainer = Loadable({
-  loader: () => import("./gifts/containers/GiftsListContainer"),
+  loader: () => import("./organisms/GiftsListContainer"),
   loading: Loading
 });
 
 const ProfileContainers = Loadable({
-  loader: () => import("./user/containers/ProfileContainers"),
+  loader: () => import("./organisms/ProfileContainers"),
   loading: Loading
 });
 
 const GiftShowContainer = Loadable({
-  loader: () => import("./gifts/containers/GiftShowContainer"),
+  loader: () => import("./organisms/GiftShowContainer"),
   loading: Loading
 });
 
 const GiftsSendContainer = Loadable({
-  loader: () => import("./user/containers/GiftsSendContainer"),
+  loader: () => import("./organisms/GiftsSendContainer"),
   loading: Loading
 });
 
 const GiftsReceivedContainer = Loadable({
-  loader: () => import("./user/containers/GiftsReceivedContainer"),
+  loader: () => import("./organisms/GiftsReceivedContainer"),
   loading: Loading
 });
 
-// const GiftCreateContainer = Loadable({
-//   loader: () => import("./gifts/containers/GiftCreateContainer"),
-//   loading: Loading
-// });
-
 const AddUpdateForm = Loadable({
-  loader: () => import("./admin/components/AddUpdateForm"),
+  loader: () => import("./atoms/AddUpdateForm"),
   loading: Loading
 });
 
 const ErrorPage = Loadable({
-  loader: () => import("./common/components/ErrorPage"),
+  loader: () => import("./atoms/ErrorPage"),
   loading: Loading
 });
 
 const ListUsers = Loadable({
-  loader: () => import("./admin/components/ListUsers"),
+  loader: () => import("./atoms/ListUsers"),
   loading: Loading
 });
 
