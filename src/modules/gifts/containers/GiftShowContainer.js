@@ -27,7 +27,7 @@ class GiftShowContainer extends Component {
     this.props.fetchCard(id);
     if (this.props.login) {
       this.props
-        .userDetails(this.props.login.id)
+        .userDetails(this.props.login.email)
         .then(() => {
           this.setState({
             balance_points: this.props.user.balance_points,
@@ -67,24 +67,29 @@ class GiftShowContainer extends Component {
       const currentBalance = this.props.user.balance_points;
       const cardPrice = this.props.gift.cardPoints;
       const newBalance = currentBalance - cardPrice;
-      this.props.updateUserBalance(this.props.login.id, newBalance).then(() => {
-        this.props.updateTransact(UpdatedTransactObj).then(() => {
-          this.props
-            .updateCardCount(this.props.gift.id, this.props.gift.cardCount - 1)
-            .then(() => {
-              this.sendMail(this.state.email, this.props.login.email);
-              console.log(this.props.login);
-              this.setState({
-                showSuccessSnackBar: true
-              });
-              setTimeout(() => {
+      this.props
+        .updateUserBalance(this.props.login.email, newBalance)
+        .then(() => {
+          this.props.updateTransact(UpdatedTransactObj).then(() => {
+            this.props
+              .updateCardCount(
+                this.props.gift.id,
+                this.props.gift.cardCount - 1
+              )
+              .then(() => {
+                this.sendMail(this.state.email, this.props.login.email);
+
                 this.setState({
-                  showSuccessSnackBar: false
+                  showSuccessSnackBar: true
                 });
-              }, 6000);
-            });
+                setTimeout(() => {
+                  this.setState({
+                    showSuccessSnackBar: false
+                  });
+                }, 6000);
+              });
+          });
         });
-      });
       //send email
     } else {
       this.setState({
@@ -125,10 +130,12 @@ class GiftShowContainer extends Component {
     const cardPoints = Number(this.state.cardPoints);
     if (Object.keys(this.props.gift).length === 0) {
       return (
-        <CircularProgress style={{ marginLeft: "50%", marginTop: "10%" }} />
+        <CircularProgress
+          dataTest="progress"
+          style={{ marginLeft: "50%", marginTop: "10%" }}
+        />
       );
     }
-    console.log(typeof (cardPoints - balance_points));
     let points = isNaN(cardPoints - balance_points)
       ? "You need more points to gift this card"
       : "You need " +

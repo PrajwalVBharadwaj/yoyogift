@@ -12,6 +12,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 import GoogleLogin from "react-google-login";
 import style from "./LoginComponent.module.css";
 import axiosWrapper from "../../../apis/axiosCreate";
+import { adminEmail } from "../../../config/constants";
 
 class LoginComponent extends React.Component {
   constructor(props) {
@@ -71,6 +72,7 @@ class LoginComponent extends React.Component {
           passwordError: true,
           isLoading: false
         });
+        return;
       }
       let profile = response.data[0];
       if (profile.password === undefined) {
@@ -87,16 +89,19 @@ class LoginComponent extends React.Component {
       if (profile.password === password) {
         this.props.login(profile);
         window.sessionStorage.setItem("user", JSON.stringify(profile));
+        if (profile.email === adminEmail) {
+          window.sessionStorage.setItem("userType", "admin");
+        }
         this.setState({ isLoading: false, email: "", password: "" });
         this.props.closeDialog();
-      } else {
-        this.setState({
-          passwordError: true,
-          snackBarText: "Invalid password",
-          snackBarOpen: true,
-          isLoading: false
-        });
+        return;
       }
+      this.setState({
+        passwordError: true,
+        snackBarText: "Invalid password",
+        snackBarOpen: true,
+        isLoading: false
+      });
     });
   };
   render() {
@@ -120,6 +125,7 @@ class LoginComponent extends React.Component {
             <Typography variant="h3">YOYO Gifts</Typography>
             <div className={style.login}>
               <Input
+                dataTest="email"
                 style={{ display: "block" }}
                 placeholder="Email..."
                 className={style.inputFields}
@@ -131,6 +137,7 @@ class LoginComponent extends React.Component {
                 value={this.state.email}
               />
               <Input
+                dataTest="password"
                 style={{ display: "block" }}
                 placeholder="Password..."
                 type="password"
@@ -142,6 +149,7 @@ class LoginComponent extends React.Component {
                 value={this.state.password}
               />
               <Button
+                dataTest="nativeLogin"
                 style={{
                   display: "block",
                   backgroundColor: "black",

@@ -10,7 +10,6 @@ class ProfileContainer extends Component {
       this.props.userDetails(this.props.detailsObject.id);
   }
   render() {
-    console.log();
     if (this.props.isLoggedIn) {
       return (
         <Profile

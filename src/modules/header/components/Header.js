@@ -12,6 +12,7 @@ import { bindActionCreators } from "redux";
 import history from "../../common/components/history";
 import MySnackBar from "../../common/components/Snackbar";
 import Styles from "../../../assets/css/Header.module.css";
+import { adminEmail } from "../../../config/constants";
 
 const styles = {
   root: {
@@ -55,7 +56,18 @@ class Header extends Component {
                 </span>
               </Button>
             </Typography>
-            {/* {this.props.isLoggedIn ? <Button color="inherit" onClick={this.addUpdateForm}>ADD UPDATE FORM</Button> : null} */}
+            {this.props.isLoggedIn ? (
+              this.props.userDetails.email === adminEmail ? (
+                <Button
+                  color="inherit"
+                  onClick={() => {
+                    history.push("/userList");
+                  }}
+                >
+                  Show users
+                </Button>
+              ) : null
+            ) : null}
             {this.props.isLoggedIn ? (
               <Button
                 className={Styles.headerButton}

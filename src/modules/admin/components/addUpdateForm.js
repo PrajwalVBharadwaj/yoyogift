@@ -50,9 +50,6 @@ class AddUpdateForm extends Component {
     this.clearInput = this.clearInput.bind(this);
   }
 
-  updatePayload = {
-    // id: Math.floor((Math.random() * 100) + 1),
-  };
   currentGiftCard = {};
   componentDidMount() {
     // let currentGiftCard = {};
@@ -117,7 +114,7 @@ class AddUpdateForm extends Component {
     if (/^[A-Za-z\s]+$/.test(value) && value.length > 0 && value.length < 100) {
       this.setState({
         cardNameValue: value,
-        cardNameError: false,
+        cardNameaError: false,
         cardNameHelperText: ""
       });
       this.updatePayload = { ...this.updatePayload, cardName: value };
@@ -330,7 +327,6 @@ class AddUpdateForm extends Component {
           showErrorSnackBar: false
         });
       }, 6000);
-      console.log("validation failed or some fields are missing");
       //  return <MySnackbar message='Some validations are failing' color='red'/>
       return;
     } else if (!this.props.match.params.id) {
@@ -390,6 +386,7 @@ class AddUpdateForm extends Component {
             marginLeft: "1rem",
             width: "45%"
           }}
+          dataTest="cardName"
           inputType="text"
           inputPlaceholder={"Card Name"}
           inputValue={this.state.cardNameValue}
@@ -545,6 +542,7 @@ class AddUpdateForm extends Component {
         />
         <div style={{ marginTop: "10px", marginBottom: "100px" }}>
           <Button
+            dataTest="clear"
             variant="contained"
             style={{ marginLeft: "20px" }}
             onClick={this.clearInput}
@@ -552,6 +550,7 @@ class AddUpdateForm extends Component {
             CLEAR
           </Button>
           <Button
+            dataTest="addUpdate"
             variant="contained"
             style={{ marginLeft: "10px" }}
             color="primary"

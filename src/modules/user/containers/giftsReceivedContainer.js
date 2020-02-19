@@ -31,9 +31,13 @@ class GiftsReceivedContainer extends Component {
 
   render() {
     if (this.props.isLoggedIn) {
+      console.log("Working");
       if (!this.props.receivedCards || this.props.receivedCards.length < 0) {
         return (
-          <CircularProgress style={{ marginLeft: "50%", marginTop: "10%" }} />
+          <CircularProgress
+            dataTest="progress"
+            style={{ marginLeft: "50%", marginTop: "10%" }}
+          />
         );
       } else if (this.props.receivedCards.length === 0) {
         return (

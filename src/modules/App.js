@@ -71,6 +71,11 @@ const ErrorPage = Loadable({
   loading: Loading
 });
 
+const ListUsers = Loadable({
+  loader: () => import("./admin/components/ListUsers"),
+  loading: Loading
+});
+
 const App = () => {
   return (
     <LocalizeProvider>
@@ -78,7 +83,6 @@ const App = () => {
       <Router history={history}>
         <Switch>
           <Route exact path="/" component={Landing} />
-          {/* <Route path="/giftCards/new" exact component={GiftCreateContainer} /> */}
           <Route exact path="/giftCards/:id" component={GiftShowContainer} />
           <Route exact path="/giftCards" component={GiftsListContainer} />
           <Route exact path="/Profile" component={ProfileContainers} />
@@ -90,6 +94,7 @@ const App = () => {
           />
           <Route exact path="/AddUpdateForm" component={AddUpdateForm} />
           <Route exact path="/AddUpdateForm/:id" component={AddUpdateForm} />
+          <Route exact path="/userList" component={ListUsers} />
           <Route exact path="/404" component={ErrorPage} />
           <Redirect to="/404" />
         </Switch>

@@ -51,6 +51,7 @@ const cardDetails = {
 const userDetails = {
   id: "115728151885118053689",
   email: "soumodips90@gmail.com",
+  password: "test",
   first_name: "Soumodip",
   last_name: "Sinha",
   balance_points: 500,

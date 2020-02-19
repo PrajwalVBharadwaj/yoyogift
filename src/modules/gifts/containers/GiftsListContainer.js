@@ -12,8 +12,9 @@ import AscendingButton from "@material-ui/icons/SwapVert";
 import IconButton from "@material-ui/core/IconButton";
 import DescendingButton from "@material-ui/icons/SwapVerticalCircle";
 import Tooltip from "@material-ui/core/Tooltip";
-import { adminEmail } from '../../../config/constants';
-import Grid from '@material-ui/core/Grid';
+import { adminEmail } from "../../../config/constants";
+import Grid from "@material-ui/core/Grid";
+import { TextField } from "@material-ui/core";
 
 import {
   comparePointsAsc,
@@ -32,7 +33,7 @@ class GiftsListContainer extends React.Component {
       //sortOrder : true (ascending order) and false (descending order)
       sortOrder: true,
       sortByValue: "None",
-      filterValue: 'All'
+      filterValue: "All"
     };
   }
   componentDidMount() {
@@ -41,37 +42,22 @@ class GiftsListContainer extends React.Component {
   componentDidCatch(error, info) {
     console.log(error);
   }
-  handleChangePage = (event, page) => {
-    this.setState({ page });
-  };
-
-  handleChangeRowsPerPage = event => {
-    this.setState({ page: 0, rowsPerPage: event.target.value });
-  };
 
   handleSortButtonClick = () => {
     const e = {
       target: {
         value: this.state.sortByValue
       }
-    }
-    this.onChangeSort(e)
+    };
+    this.onChangeSort(e);
     this.setState({ sortOrder: !this.state.sortOrder });
   };
-  // handleClickCard = (id) => {
-  //   this.props.fetchCard(id);
-  // }
-
-  // handleUpdateClick = (id) => {
-  //   console.log("container id", id);
-  //   history.push('/AddUpdateForm/' + id)
-  // }
 
   onChangeRetailer = e => {
     const selectedValue = e.target.value;
     this.setState({
       filterValue: e.target.value
-    })
+    });
     let newGiftCard = [];
     if (selectedValue !== "All") {
       this.props.giftCards.forEach(element => {
@@ -82,16 +68,19 @@ class GiftsListContainer extends React.Component {
     } else {
       newGiftCard = this.props.giftCards;
     }
-    this.props.fetchCardFilter(newGiftCard)
+    this.props.fetchCardFilter(newGiftCard);
   };
 
   onChangeSort = e => {
     const { sortOrder } = this.state;
-    const giftCards = this.state.filterValue === 'All' ? this.props.giftCards : this.props.giftCardsFiltered;
+    const giftCards =
+      this.state.filterValue === "All"
+        ? this.props.giftCards
+        : this.props.giftCardsFiltered;
     this.setState({
       sortByValue: e.target.value,
       sortOrder: !this.state.sortOrder
-    })
+    });
     let newGiftCard = giftCards;
     if (e.target.value !== "None") {
       switch (e.target.value) {
@@ -120,6 +109,22 @@ class GiftsListContainer extends React.Component {
     history.push("/AddUpdateForm");
   };
 
+  searchHandler = e => {
+    let str = e.target.value;
+    let reg = new RegExp(str, "i");
+    let gifts = this.props.giftCards;
+    let searchRes = gifts.filter(gift => {
+      if (
+        gift.cardName.search(reg) >= 0 ||
+        gift.cardRetailer.search(reg) >= 0 ||
+        gift.cardVendor.search(reg) >= 0
+      ) {
+        return gift;
+      }
+    });
+    this.props.fetchCardFilter(searchRes);
+  };
+
   render() {
     if (this.props.giftCards.length === 0) {
       return (
@@ -133,17 +138,7 @@ class GiftsListContainer extends React.Component {
     let uniqueCardRetailerArray = [...new Set(cardRetailerArray)];
     return (
       <React.Fragment>
-        {/* <select onChange={this.onChangeRetailer}>
-          <option value="All">All</option>
-          {
-            uniqueCardRetailerArray.map((option) => {
-              return(
-                <option value={option}>{option}</option>
-              )
-            })
-          }
-        </select> */}
-        <Grid container spacing={0}>
+        <Grid container spacing={0} style={{ padding: "2%" }}>
           <Grid item xs={12} sm={3}>
             <label style={{ marginLeft: "2%" }}>Filter by Retailer:</label>
             <Select
@@ -192,23 +187,24 @@ class GiftsListContainer extends React.Component {
               >
                 <IconButton
                   onClick={this.handleSortButtonClick}
-                  disabled={this.state.sortByValue === 'None'}>
+                  disabled={this.state.sortByValue === "None"}
+                >
                   <AscendingButton />
                 </IconButton>
               </Tooltip>
             ) : (
-                <Tooltip
-                  title={
-                    this.state.sortByValue === "Validity"
-                      ? "Newest to Oldest"
-                      : "High to Low"
-                  }
-                >
-                  <IconButton onClick={this.handleSortButtonClick}>
-                    <DescendingButton />
-                  </IconButton>
-                </Tooltip>
-              )}
+              <Tooltip
+                title={
+                  this.state.sortByValue === "Validity"
+                    ? "Newest to Oldest"
+                    : "High to Low"
+                }
+              >
+                <IconButton onClick={this.handleSortButtonClick}>
+                  <DescendingButton />
+                </IconButton>
+              </Tooltip>
+            )}
           </Grid>
           <Grid item xs={12} sm={3}>
             {adminEmail.includes(this.props.userDetails.email) ? (
@@ -219,15 +215,41 @@ class GiftsListContainer extends React.Component {
                 onClick={this.addUpdateForm}
               >
                 ADD CARD
-          </Button>
+              </Button>
             ) : null}
           </Grid>
-          {/* <Grid item xs={12} sm={3}>
-              search bar:<input name="SearchBar" />
-          </Grid> */}
+          <Grid item xs={12} sm={3}>
+            {/* <Autocomplete
+              style={{
+                marginLeft: "2%",
+                marginTop: "2%",
+                marginRight: "auto",
+                height: "35px"
+              }}
+              options={this.props.giftCards}
+              getOptionLabel={option => option.cardName}
+              renderInput={params => {
+                console.log(params);
+                return (
+                  <TextField
+                    {...params}
+                    label="Search..."
+                    variant="outlined"
+                    fullWidth
+                  />
+                );
+              }}
+            /> */}
+            <TextField
+              onChange={this.searchHandler}
+              placeholder="search"
+              variant="outlined"
+              label="Search"
+            />
+          </Grid>
         </Grid>
 
-        <div style={{ textAlign: 'center' }}>
+        <div style={{ textAlign: "center" }}>
           <GiftsList
             {...this.props}
             handleClickCard={this.handleClickCard}
@@ -251,7 +273,10 @@ GiftsListContainer.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default connect(
-  mapStateToProps,
-  { fetchCards, fetchCard, fetchCardFilter }
-)(GiftsListContainer);
+export { GiftsListContainer };
+
+export default connect(mapStateToProps, {
+  fetchCards,
+  fetchCard,
+  fetchCardFilter
+})(GiftsListContainer);

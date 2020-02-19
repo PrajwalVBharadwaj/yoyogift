@@ -1,15 +1,21 @@
-import { FETCH_CARDS, FETCH_CARD, FETCH_CARD_FILTER, UPDATE_CARD_COUNT, ADMIN_ADD_CARD, ADMIN_UPDATE_CARD} from '../actions/types';
+import {
+  FETCH_CARDS,
+  FETCH_CARD,
+  FETCH_CARD_FILTER,
+  UPDATE_CARD_COUNT,
+  ADMIN_ADD_CARD,
+  ADMIN_UPDATE_CARD
+} from "../actions/types";
 const INITIAL_STATE = {
   giftCards: [],
   giftCardsFiltered: [],
-  giftCard: {},
+  giftCard: {}
 };
 
 const giftsReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-
     case FETCH_CARD:
-      state = { ...state, giftCard: action.payload.data }
+      state = { ...state, giftCard: action.payload.data };
       break;
 
     case FETCH_CARDS:
@@ -29,18 +35,15 @@ const giftsReducer = (state = INITIAL_STATE, action) => {
         giftCards: action.payload
       };
       break;
-    
+
     case ADMIN_UPDATE_CARD:
-      console.log(state)
-      console.log(action.payload.data)
       state.giftCards = state.giftCards.map(card => {
         if (card.id === action.payload.data.id) {
-          return action.payload.data
+          return action.payload.data;
         } else {
           return card;
         }
-      })
-      console.log(state)
+      });
       break;
 
     case FETCH_CARD_FILTER:
@@ -53,10 +56,10 @@ const giftsReducer = (state = INITIAL_STATE, action) => {
         giftCardsFiltered: action.payload
       };
       break;
-    
-      case UPDATE_CARD_COUNT:
-        state = { ...state, giftCard: action.payload }
-        break;
+
+    case UPDATE_CARD_COUNT:
+      state = { ...state, giftCard: action.payload };
+      break;
 
     default:
       state = {

@@ -1,25 +1,25 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import { Button } from '@material-ui/core';
-import {DateFormatter} from '../../common/components/DateFormatter';
+import React from "react";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
+import Table from "@material-ui/core/Table";
+import TableBody from "@material-ui/core/TableBody";
+import TableCell from "@material-ui/core/TableCell";
+import TableHead from "@material-ui/core/TableHead";
+import TableRow from "@material-ui/core/TableRow";
+import Paper from "@material-ui/core/Paper";
+import { Button } from "@material-ui/core";
+import { DateFormatter } from "../../common/components/DateFormatter";
 
 const styles = theme => ({
   root: {
-    minHeight: '100vh',
-    width: '100%',
+    minHeight: "100vh",
+    width: "100%",
     marginTop: theme.spacing.unit * 3,
-    overflowX: 'auto',
+    overflowX: "auto"
   },
   table: {
-    minWidth: 700,
-  },
+    minWidth: 700
+  }
 });
 
 function GiftsReceived(props) {
@@ -49,7 +49,19 @@ function GiftsReceived(props) {
               <TableCell>{row.cardShortDesc}</TableCell>
               <TableCell>{DateFormatter(row.cardIssueDate)}</TableCell>
               <TableCell>{DateFormatter(row.cardExpiryDate)}</TableCell>
-              <TableCell>{row.isRedeemed ? 'Redeemed' : <Button variant="contained" color="primary" onClick={()=>props.redeemCard(row)}>Redeem</Button>}</TableCell>
+              <TableCell>
+                {row.isRedeemed ? (
+                  "Redeemed"
+                ) : (
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => props.redeemCard(row)}
+                  >
+                    Redeem
+                  </Button>
+                )}
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -59,7 +71,9 @@ function GiftsReceived(props) {
 }
 
 GiftsReceived.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired
 };
+
+export { GiftsReceived };
 
 export default withStyles(styles)(GiftsReceived);
